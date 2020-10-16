@@ -4,11 +4,22 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const mongoose = require('mongoose')
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const dishRouter = require('./routes/dishRouter')
 const leaderRouter = require('./routes/leadersRouter')
 const promotionRouter = require('./routes/promotionsRouter')
+
+const Dishes = require('./models/dishes')
+const dbUrl = 'mongodb://localhost:27017/conFusion'
+const connect = mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true ,useCreateIndex : true,})
+
+connect.then((db) => {
+  console.log('Connected to the db server !')
+}, (err) => console.log('err', err))
+
 
 var app = express();
 
