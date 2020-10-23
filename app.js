@@ -8,8 +8,11 @@ const mongoose = require('mongoose')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 
+const passport = require('passport')
+const authenticate = require('./authenticate')
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/usersRouter');
 const dishRouter = require('./routes/dishRouter')
 const leaderRouter = require('./routes/leadersRouter')
 const promotionRouter = require('./routes/promotionsRouter')
@@ -43,6 +46,9 @@ app.use(session({
   store : new FileStore()
 }))
 
+app.use(passport.initialize())
+app.use(passport.session())
+
 // const cookieKey = '12345'
 // app.use(cookieParser(cookieKey));
 
@@ -51,23 +57,16 @@ function auth(req, res, next) {
   console.log('headers', req.session) 
 
   // const cookiesHeader = req.signedCookies
-  const sessionHeader = req.session
-  if ( !sessionHeader.user ) {
+  // const sessionHeader = req.session
+  
+  if ( !req.user ) {
   
     let err = new Error ("You are not authenticated!!")
     err.status = 401
     return next(err)
   }
   else {
-    if(sessionHeader.user === 'authenticated'){
       next()
-    }
-    else {
-      console.log('aklsfklsf')
-      let err = new Error ("You are not authenticated!!")
-      err.status = 403
-      return next(err)
-    }
   }
   
 }
