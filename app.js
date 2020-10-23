@@ -10,6 +10,7 @@ const FileStore = require('session-file-store')(session)
 
 const passport = require('passport')
 const authenticate = require('./authenticate')
+const config = require('./config')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRouter');
@@ -17,9 +18,8 @@ const dishRouter = require('./routes/dishRouter')
 const leaderRouter = require('./routes/leadersRouter')
 const promotionRouter = require('./routes/promotionsRouter')
 
-// const Dishes = require('./models/dishes');
-const { Buffer } = require('buffer');
-const dbUrl = 'mongodb://localhost:27017/conFusion'
+// const { Buffer } = require('buffer');
+const dbUrl = config.mongoUrl
 const connect = mongoose.connect(dbUrl, { useUnifiedTopology: true, useNewUrlParser: true ,useCreateIndex : true,})
 
 connect.then((db) => {
@@ -38,43 +38,43 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
-app.use(session({
-  name : 'session-id',
-  secret : '12345',
-  saveUninitialized : false,
-  resave : false,
-  store : new FileStore()
-}))
+// app.use(session({
+//   name : 'session-id',
+//   secret : '12345',
+//   saveUninitialized : false,
+//   resave : false,
+//   store : new FileStore()
+// }))
 
 app.use(passport.initialize())
-app.use(passport.session())
+// app.use(passport.session())
 
 // const cookieKey = '12345'
 // app.use(cookieParser(cookieKey));
 
 
-function auth(req, res, next) {
-  console.log('headers', req.session) 
+// function auth(req, res, next) {
+//   console.log('headers', req.session) 
 
-  // const cookiesHeader = req.signedCookies
-  // const sessionHeader = req.session
+//   // const cookiesHeader = req.signedCookies
+//   // const sessionHeader = req.session
   
-  if ( !req.user ) {
+//   if ( !req.user ) {
   
-    let err = new Error ("You are not authenticated!!")
-    err.status = 401
-    return next(err)
-  }
-  else {
-      next()
-  }
+//     let err = new Error ("You are not authenticated!!")
+//     err.status = 401
+//     return next(err)
+//   }
+//   else {
+//       next()
+//   }
   
-}
+// }
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-app.use(auth)
+// app.use(auth)
 
 app.use(express.static(path.join(__dirname, 'public')));
 

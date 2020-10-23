@@ -1,7 +1,8 @@
 var express = require('express');
 const bodyParser = require('body-parser')
 const User = require('../models/users')
-const passport = require('passport')
+const passport = require('passport');
+const authenticate  = require('../authenticate');
 
 
 const router = express.Router();
@@ -35,9 +36,10 @@ router.post('/signup', (req, res, next) => {
 
 router.post('/login',passport.authenticate('local'),(req, res, next) => {
   
+  const token = authenticate.getToken({_id : req.user._id})
   res.statusCode = 200
   res.setHeader('Content-Type' , 'application/json')
-  res.json({success : true, status : 'Login successfull'})
+  res.json({success : true, status : 'Login successfull', token : token})
 })
 
 
