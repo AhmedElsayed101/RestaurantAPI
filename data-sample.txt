@@ -1,0 +1,20 @@
+// {
+//     "username": "ahmed",
+//     "password": "123"
+// "firstname" : "ahmed",
+// "lastname" : "elsayed"
+// }
+
+// {
+//     "name" : "Uthappizza",
+//     "image" : "images/uthappizza.png",
+//     "category" : "mains",
+//     "label" : "Hot",
+//     "price" : "4.99",
+//     "featured" : "true",
+//     "description" : "A uniqe dish",
+//     "comments" : []
+// }
+// {
+//     "rating" : 5, "comment" : "This is a comment"
+// }
