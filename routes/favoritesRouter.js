@@ -94,7 +94,7 @@ favoriteRouter.route('/')
         .catch( err => next(err))
 
 })
-.delete(authenticate.verifyUser,(req, res, next) => {
+.delete(cors.corsWithOprions, authenticate.verifyUser,(req, res, next) => {
     const userId = req.user._id
     Favorites.deleteOne({author : userId})
         .then(() => {
@@ -110,7 +110,7 @@ favoriteRouter.route('/')
 
 favoriteRouter.route('/:dishId')
 .options(cors.corsWithOprions, (req, res) => {res.sendStatus(200)})
-.post(authenticate.verifyUser, (req, res, next) => {
+.post(cors.corsWithOprions, authenticate.verifyUser, (req, res, next) => {
 
     const userId = req.user._id
     if (!req.params.dishId){
@@ -178,7 +178,7 @@ favoriteRouter.route('/:dishId')
 
 
 })
-.delete(authenticate.verifyUser, (req, res ,next) => {
+.delete(cors.corsWithOprions, authenticate.verifyUser, (req, res ,next) => {
     const userId = req.user._id
     const dishId = req.params.dishId
 
